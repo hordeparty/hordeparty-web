@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Serial Server</title>
+    <script src="assets/js/socket.io.min.js"></script>
+    <script src="assets/js/simplepeer.min.js"></script>
+    <script src="assets/js/jquery-3.6.0.js"></script>
+    <script src="assets/js/class/canvas/BtnMark.js"></script>
+    <script src="assets/js/class/canvas/AxesMark.js"></script>
+    <script src="assets/js/class/canvas/GamepadCanvasConfig.js"></script>
+    <script src="assets/js/class/canvas/GamepadCanvas.js"></script>
+    <script src="assets/js/class/serial/Serial.js"></script>
+    <script src="assets/js/class/serial/SerialReaderDebug.js"></script>
+    <script src="assets/js/class/simplepeer/ClientHandler.js"></script>
+    <script src="assets/js/class/simplepeer/SimplePeerServer.js"></script>
+    <script src="assets/js/class/usermedia/UserMediaHandler.js"></script>
+    <script src="assets/js/serial-server.js"></script>
+</head>
+<body>
+<button onclick="broadcastServerReady();">Broadcast server ready</button>
+<button onclick="startAnimating(30);" id="validate-controllers-btn" disabled="disabled">validate controllers</button>
+<button onclick="usermediaHandler.getVideoAudioStream();">getVideoAudioStream()</button>
+<button onclick="connectSerial();" id="connect-serial-btn" disabled="disabled">connectSerial()</button>
+<div style="display: flex">
+    <div class="video-options">
+        <select name="video-select">
+            <option value="">Select camera</option>
+        </select>
+    </div>
+    <div class="mic-options">
+        <select name="mic-select">
+            <option value="">Select mic</option>
+        </select>
+    </div>
+</div>
+<table border="1">
+    <thead>
+    <tr>
+        <td>Jogador</td>
+        <td>Controle</td>
+        <td>Status</td>
+        <td id="serial-echo" style="font-family: monospace;">(8) 0xB0 0x00 0x00 0x00 0x00 0x00 0x00 0xBF</td>
+    </tr>
+    </thead>
+    <tbody id="tbodyJogadores" style="font-family: monospace;"></tbody>
+</table>
+<canvas id="canvas-stream" width="640" height="480"></canvas>
+<img alt="" style="display: none" id="standard-gamepad" src="assets/img/standard_gamepad.svg" width="640"/>
+<br/>
+<video width="400" height="400" controls id="vid" playsinline autoplay muted style="display: none"></video>
+</body>
+</html>

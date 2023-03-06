@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hordeparty</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <!--    <link rel="stylesheet" href="assets/css/main.css">-->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" crossorigin="anonymous"></script>
+    <script src="assets/js/main.js"></script>
+</head>
+<body>
+
+<div id="dialog" title="Festa">
+    <form>
+        <fieldset class="ui-helper-reset">
+            <p>
+                <label for="tab_nome_jogador">Jogador</label>
+                <input type="text" name="tab_nome_jogador" id="tab_nome_jogador" value="Sem nome"
+                       class="ui-widget-content ui-corner-all"></p>
+            <p>
+                <label for="tab_title">Chave</label>
+                <input type="text" name="tab_title" id="tab_title" value=""
+                       class="ui-widget-content ui-corner-all"></p>
+        </fieldset>
+    </form>
+</div>
+
+<div id="dialog_abandona" title="Abandonar Festa?">
+    <form>
+        <fieldset class="ui-helper-reset">
+            Esta na hora de partir da festa <br/><strong><label id="label_abandona">?</label></strong>?
+        </fieldset>
+    </form>
+</div>
+
+<button id="add_tab">Festa</button>
+
+<div id="tabs">
+    <ul>
+        <li><a href="#tabs-1">Bem vindo</a></li>
+    </ul>
+    <div id="tabs-1">
+        <p>HordeParty &eacute; uma plataforma para jogos multiplayer.</p>
+        <p>Para criar sua festa siga os passos:</p>
+        <ul>
+            <li><p><strong>Reuna sua horda!</strong></p></li>
+            <li><p><strong>O lider da horda cria a festa.</strong></p></li>
+            <li>
+                <p>O lider da horda <strong>compartilha</strong> com os convidados a <strong>chave da festa.</strong>
+                </p>
+            </li>
+            <li><p><strong>Os membros da horda entram na festa.</strong></p></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
