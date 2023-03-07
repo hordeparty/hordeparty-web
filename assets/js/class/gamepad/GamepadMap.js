@@ -54,6 +54,15 @@ class GamepadMap {
             ]
             this.axesMapping = [0, 1, 5, 2];
         }
+        if (this.gamepad.axes.length === 2 && this.gamepad.buttons.length === 10) {
+            this.buttonMapping = [2, 1, 3, 0, 4, 5, 6, 7, 8, 9, 6, 6,
+                new SimpleAxisToBtn(1, -1.0), // btn12
+                new SimpleAxisToBtn(1, 1), // btn13
+                new SimpleAxisToBtn(0, -1), // btn14
+                new SimpleAxisToBtn(0, 1)// btn15
+            ];
+            this.axesMapping = []
+        }
 
     }
 
