@@ -21,6 +21,10 @@ class GamepadHandler {
         this.controllers.set(gamepad.index, gamepad);
         let wrtcData = new Uint8Array(8);
         wrtcData[0] = 0xB0;
+        wrtcData[3] = 0x80;
+        wrtcData[4] = 0x80;
+        wrtcData[5] = 0x80;
+        wrtcData[6] = 0x80;
         wrtcData[7] = 0xBF;
         this.wrtcData.set(gamepad.index, wrtcData);
         this.gamepadMap.set(gamepad.index, new GamepadMap(gamepad));
