@@ -26,6 +26,7 @@ class GamepadMap {
 
     remapButtons() {
         if (this.gamepad.axes.length === 6 && this.gamepad.buttons.length === 12) {
+            // USB Gamepad (Vendor: 0810 Product: 0001) Ubuntu 20.04/chrome
             this.buttonMapping = [2, 1, 3, 0, 4, 5, 6, 7, 8, 9, 10, 11,
                 new SimpleAxisToBtn(5, -1.0), // btn12
                 new SimpleAxisToBtn(5, 1), // btn13
@@ -35,6 +36,8 @@ class GamepadMap {
             this.axesMapping = [0, 1, 3, 2];
         }
         if (this.gamepad.axes.length === 10 && this.gamepad.buttons.length === 15) {
+            // Unknown Gamepad (Vendor: 1949 Product: 0402) Windows 10/chrome
+            // Bluetooth Gamepad (Vendor: 1949 Product: 0402) Windows 10/chrome
             let step = 0.285714149475098;
             this.buttonMapping = [0, 1, 3, 4, 6, 7, 8, 9, 10, 11, 13, 14,
                 new AxisToBtn(9, step, -1), // btn12
@@ -45,6 +48,7 @@ class GamepadMap {
             this.axesMapping = [0, 1, 2, 5];
         }
         if (this.gamepad.axes.length === 10 && this.gamepad.buttons.length === 12) {
+            // USB Gamepad (Vendor: 0810 Product: 0001) Windows 10/chrome
             let step = 0.285714149475098;
             this.buttonMapping = [2, 1, 3, 0, 4, 5, 6, 7, 8, 9, 10, 11,
                 new AxisToBtn(9, step, -1), // btn12
@@ -55,6 +59,7 @@ class GamepadMap {
             this.axesMapping = [0, 1, 5, 2];
         }
         if (this.gamepad.axes.length === 2 && this.gamepad.buttons.length === 10) {
+            // USB gamepad (Vendor: 081f Product: e401) Windows 10/chrome
             this.buttonMapping = [2, 1, 3, 0, 4, 5, 6, 7, 8, 9,
                 new FakeBtn(),
                 new FakeBtn(),
