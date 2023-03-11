@@ -1,6 +1,7 @@
 let gamePadHandler = new GamepadHandler();
-
-gamePadHandler.addController(4, new FakeGamepad("Keyboard", "keyboard"));
+let keyGamepad = new FakeGamepad("Keyboard", "keyboard");
+new KeyboardGamePad(keyGamepad);
+gamePadHandler.addController(4, keyGamepad);
 gamePadHandler.addController(5, new FakeGamepad("Screen", "screen"));
 
 function debugSend() {
