@@ -20,7 +20,9 @@ class GamepadCanvas {
         this.gamepadCanvasConfig = gamepadCanvasConfig;
         this.fpsInterval = 1000 / gamepadCanvasConfig.fps;
         this.canvas = gamepadCanvasConfig.domCanvas;
-        this.ctx = this.canvas.getContext('2d');
+        this.ctx = this.canvas.getContext('2d', {
+            desynchronized: true
+        });
         this.ctx.font = "bold 30px Arial";
         this.btnMarks = gamepadCanvasConfig.btnMarks;
         this.axesMarks = gamepadCanvasConfig.axesMarks;
@@ -74,13 +76,17 @@ class GamepadCanvas {
     animate() {
         if (this.runAnimate) {
             requestAnimationFrame(this.animate.bind(this));
+            let dateNow = new Date();
             let now = Date.now();
             let elapsed = now - this.then;
             if (elapsed > this.fpsInterval) {
                 this.then = now - (elapsed % this.fpsInterval);
                 this.drawAll();
                 this.ctx.fillStyle = "#000";
-                this.ctx.fillText("time: " + now, 5, 40);
+                this.ctx.fillText(dateNow.getHours() + ":"
+                    + dateNow.getMinutes() + ":"
+                    + dateNow.getSeconds() + "."
+                    + String(dateNow.getMilliseconds()).padStart(3, '0'), 5, 40);
             }
         }
     }
