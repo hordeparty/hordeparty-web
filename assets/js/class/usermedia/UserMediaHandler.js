@@ -10,12 +10,16 @@ class UserMediaHandler {
 
     audioDevices;
 
-    constraints = {
+    videoconstraints = {
         video: {
             deviceId: {
                 exact: 'default'
             }
-        }, audio: {
+        }
+    };
+
+    audioconstraints = {
+        audio: {
             deviceId: {
                 exact: 'default'
             },
@@ -23,7 +27,7 @@ class UserMediaHandler {
             echoCancellation: false,
             noiseSuppression: false
         }
-    };
+    }
 
     constraints_debug = {
         video: {
@@ -116,15 +120,25 @@ class UserMediaHandler {
         let cameraOptions = document.querySelector('.video-options>select');
         let micOptions = document.querySelector('.mic-options>select');
         let video = document.getElementById("vid");
+        let audio = document.getElementById("aud");
 
-        this.constraints.video.deviceId.exact = cameraOptions.value;
-        this.constraints.audio.deviceId.exact = micOptions.value;
+        this.videoconstraints.video.deviceId.exact = cameraOptions.value;
+        this.audioconstraints.audio.deviceId.exact = micOptions.value;
         navigator.mediaDevices
-            .getUserMedia(this.constraints)
+            .getUserMedia(this.videoconstraints)
             .then((stream) => {
                 video.srcObject = stream;
                 video.addEventListener("loadedmetadata", () => {
                     video.play();
+                });
+            })
+            .catch(alert);
+        navigator.mediaDevices
+            .getUserMedia(this.audioconstraints)
+            .then((stream) => {
+                audio.srcObject = stream;
+                audio.addEventListener("loadedmetadata", () => {
+                    audio.play();
                 });
             })
             .catch(alert);

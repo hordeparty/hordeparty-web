@@ -18,11 +18,21 @@ class SimplePeerServer {
         this.socket.on('clientHello', msgHelloIn => {
             let msgIn = msgHelloIn;
             let controller = this.clients.size + 1;
-            let simplePeer = new SimplePeer({
-                initiator: true,
-                stream: this.getStreamVideo(),
-                trickle: false
-            });
+            let streamTypeArray = msgIn.msg.split(':');
+            let simplePeer;
+            if (streamTypeArray.length === 2 && streamTypeArray[1] === "nothing") {
+                console.log("no stream");
+                simplePeer = new SimplePeer({
+                    initiator: true,
+                    trickle: false
+                });
+            } else {
+                simplePeer = new SimplePeer({
+                    initiator: true,
+                    stream: this.getStreamVideo(msgIn.msg),
+                    trickle: false
+                });
+            }
             simplePeer.on('signal', (data) => {
                 this.socket.emit('serverOffer', msgIn.from, data);
             });
@@ -53,13 +63,28 @@ class SimplePeerServer {
         });
     }
 
-    getStreamVideo() {
-        let videoStream = document.getElementById('vid').captureStream();
+    getStreamVideo(streamType) {
         let canvasStream = document.getElementById('canvas-stream').captureStream();
-        if (videoStream.getAudioTracks()[0]) {
-            canvasStream.addTrack(videoStream.getAudioTracks()[0]);
+        let audioStream = document.getElementById('aud').captureStream();
+        let streamTypeArray = streamType.split(':')
+        if (streamTypeArray.length === 2) {
+            let videoStream = document.getElementById('vid').captureStream();
+            if (streamTypeArray[1] === "canvas") {
+                console.log("canvas stream");
+                return canvasStream;
+            } else if (streamTypeArray[1] === "video") {
+                console.log("video stream");
+                return videoStream;
+            } else if (streamTypeArray[1] === "audio") {
+                console.log("audio stream");
+                return audioStream;
+            }
+        } else {
+            if (audioStream.getAudioTracks()[0]) {
+                canvasStream.addTrack(audioStream.getAudioTracks()[0]);
+            }
+            return canvasStream;
         }
-        return canvasStream;
     }
 
     ready() {
