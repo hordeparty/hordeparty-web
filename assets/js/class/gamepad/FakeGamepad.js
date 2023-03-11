@@ -1,8 +1,13 @@
 class FakeGamepad {
 
-    buttons = [];
+    buttons = [
+        new FakeBtn(), new FakeBtn(), new FakeBtn(), new FakeBtn(),
+        new FakeBtn(), new FakeBtn(), new FakeBtn(), new FakeBtn(),
+        new FakeBtn(), new FakeBtn(), new FakeBtn(), new FakeBtn(),
+        new FakeBtn(), new FakeBtn(), new FakeBtn(), new FakeBtn()
+    ];
 
-    axes = [];
+    axes = [0, 0, 0, 0];
     id;
 
     mapping;
