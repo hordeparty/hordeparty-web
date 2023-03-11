@@ -87,6 +87,7 @@ class GamepadCanvas {
                     + dateNow.getMinutes() + ":"
                     + dateNow.getSeconds() + "."
                     + String(dateNow.getMilliseconds()).padStart(3, '0'), 5, 40);
+                this.ctx.fillText("update interval: " + elapsed, 5, 420);
             }
         }
     }
