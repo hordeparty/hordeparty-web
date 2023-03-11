@@ -2,6 +2,8 @@ class GamepadHandler {
 
     controllers = new Map();
 
+    controllerEnabledIdx = 0;
+
     wrtcData = new Map();
 
     gamepadMap = new Map();
@@ -69,14 +71,11 @@ class GamepadHandler {
 
     frame() {
         if (this.controllers.size > 0) {
-            this.controllers.forEach(function (controller, idx) {
-                    this.controllers.set(idx, navigator.getGamepads()[idx]);
-                    this.handleController(
-                        this.controllers.get(idx),
-                        this.wrtcData.get(idx),
-                        this.gamepadMap.get(idx)
-                    );
-                }.bind(this)
+            this.controllers.set(this.controllerEnabledIdx, navigator.getGamepads()[this.controllerEnabledIdx]);
+            this.handleController(
+                this.controllers.get(this.controllerEnabledIdx),
+                this.wrtcData.get(this.controllerEnabledIdx),
+                this.gamepadMap.get(this.controllerEnabledIdx)
             );
         }
         window.requestAnimationFrame(this.frame.bind(this));
