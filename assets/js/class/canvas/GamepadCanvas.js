@@ -21,6 +21,7 @@ class GamepadCanvas {
         this.fpsInterval = 1000 / gamepadCanvasConfig.fps;
         this.canvas = gamepadCanvasConfig.domCanvas;
         this.ctx = this.canvas.getContext('2d');
+        this.ctx.font = "bold 30px Arial";
         this.btnMarks = gamepadCanvasConfig.btnMarks;
         this.axesMarks = gamepadCanvasConfig.axesMarks;
         this.animate();
@@ -78,6 +79,8 @@ class GamepadCanvas {
             if (elapsed > this.fpsInterval) {
                 this.then = now - (elapsed % this.fpsInterval);
                 this.drawAll();
+                this.ctx.fillStyle = "#000";
+                this.ctx.fillText("time: " + now, 5, 40);
             }
         }
     }
