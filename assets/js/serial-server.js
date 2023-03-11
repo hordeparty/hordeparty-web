@@ -58,7 +58,7 @@ let room = new URL(window.location.href).searchParams.get('room');
 if (!room) {
     room = "123";
 }
-let spserver = new SimplePeerServer("ws://localhost:3000/servers", room);
+let spserver = new SimplePeerServer("ws://hordeparty.ddns.net:3000/servers", room);
 
 const changeController = (controllerSelect) => {
     spserver.changeController(controllerSelect);
