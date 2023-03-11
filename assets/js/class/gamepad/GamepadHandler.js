@@ -2,7 +2,7 @@ class GamepadHandler {
 
     controllers = new Map();
 
-    controllerEnabledIdx = 0;
+    controllerEnabledIdx;
 
     wrtcData = new Map();
 
@@ -19,8 +19,17 @@ class GamepadHandler {
     }
 
     connectListener(e) {
-        let gamepad = navigator.getGamepads()[e.gamepad.index];
-        this.controllers.set(gamepad.index, gamepad);
+        this.addController(e.gamepad.index, navigator.getGamepads()[e.gamepad.index])
+    }
+
+    disconnectListener(e) {
+        this.controllers.delete(e.gamepad.index);
+        this.wrtcData.delete(e.gamepad.index);
+        this.gamepadMap.delete(e.gamepad.index);
+    }
+
+    addController(idx, gamepad) {
+        this.controllers.set(idx, gamepad);
         let wrtcData = new Uint8Array(8);
         wrtcData[0] = 0xB0;
         wrtcData[3] = 0x80;
@@ -28,14 +37,8 @@ class GamepadHandler {
         wrtcData[5] = 0x80;
         wrtcData[6] = 0x80;
         wrtcData[7] = 0xBF;
-        this.wrtcData.set(gamepad.index, wrtcData);
-        this.gamepadMap.set(gamepad.index, new GamepadMap(gamepad));
-    }
-
-    disconnectListener(e) {
-        this.controllers.delete(e.gamepad.index);
-        this.wrtcData.delete(e.gamepad.index);
-        this.gamepadMap.delete(e.gamepad.index);
+        this.wrtcData.set(idx, wrtcData);
+        this.gamepadMap.set(idx, new GamepadMap(gamepad));
     }
 
     handleController(controller, wrtcData, gamepadMap) {
@@ -70,8 +73,10 @@ class GamepadHandler {
     }
 
     frame() {
-        if (this.controllers.size > 0) {
-            this.controllers.set(this.controllerEnabledIdx, navigator.getGamepads()[this.controllerEnabledIdx]);
+        if (this.controllers.size > 0 && this.controllerEnabledIdx) {
+            if (this.controllerEnabledIdx < 4) {
+                this.controllers.set(this.controllerEnabledIdx, navigator.getGamepads()[this.controllerEnabledIdx]);
+            }
             this.handleController(
                 this.controllers.get(this.controllerEnabledIdx),
                 this.wrtcData.get(this.controllerEnabledIdx),

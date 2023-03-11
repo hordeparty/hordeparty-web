@@ -24,10 +24,12 @@
         <td align="right">Input</td>
         <td><select id="gamepadSelect" onchange="debugSend();" disabled="disabled">
             <option value="">select gamepad</option>
-            <option value="0">gamepad0</option>
-            <option value="1">gamepad1</option>
-            <option value="2">gamepad2</option>
-            <option value="3">gamepad3</option>
+            <option value="">gamepad0</option>
+            <option value="">gamepad1</option>
+            <option value="">gamepad2</option>
+            <option value="">gamepad3</option>
+            <option value="4">Keyboard</option>
+            <option value="5">Screen</option>
         </select></td>
 
     </tr>
@@ -70,6 +72,7 @@ Volume:
 </script>
 <script src="assets/js/simplepeer.min.js"></script>
 <script src="assets/js/class/gamepad/FakeBtn.js"></script>
+<script src="assets/js/class/gamepad/FakeGamepad.js"></script>
 <script src="assets/js/class/gamepad/SimpleAxisToBtn.js"></script>
 <script src="assets/js/class/gamepad/AxisToBtn.js"></script>
 <script src="assets/js/class/gamepad/GamepadMap.js"></script>
