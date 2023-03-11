@@ -27,6 +27,7 @@ class GamepadMap {
     remapButtons() {
         if (this.gamepad.axes.length === 6 && this.gamepad.buttons.length === 12) {
             // USB Gamepad (Vendor: 0810 Product: 0001) Ubuntu 22.04/chrome
+            // Twin USB Joystick (Vendor: 0810 Product: 0001) Ubuntu 22.04/chrome
             this.buttonMapping = [2, 1, 3, 0, 4, 5, 6, 7, 8, 9, 10, 11,
                 new SimpleAxisToBtn(5, -1.0), // btn12
                 new SimpleAxisToBtn(5, 1), // btn13
