@@ -1,4 +1,4 @@
-const socketCli = io("ws://localhost:3000/clients");
+const socketCli = io("wss://hordeparty.ddns.net/clients");
 
 function entrarServidorXnes(idTab, idServer) {
     console.log('entra xnes', idTab, idServer);
