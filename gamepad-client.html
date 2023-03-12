@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="mobile-web-app-capable" content="yes" charset="UTF-8">
+    <title>Gamepad Client</title>
+    <link rel="stylesheet" href="assets/css/gamepad-client.css">
+</head>
+<body>
+<div class="container">
+    <div class="sticky" style="top: 0;" id="btn-container">
+        <img src="assets/img/standard_gamepad_play.svg" class="fullscreen"/>
+        <canvas id="canvas-left-axes" width="10" height="10" class="absolute"
+                style="border:solid black 1px; width: 15%; bottom: 7.5%; right: 58.5%;">
+        </canvas>
+        <canvas id="canvas-right-axes" width="10" height="10" class="absolute"
+                style="border:solid black 1px; width: 15%; bottom: 7.5%; right: 26.5%;">
+        </canvas>
+        <div class="btn-template" id="btn-template"
+             style="width: 9.5%; height: 16%; bottom: 0.5%; right: 0.5%;"></div>
+    </div>
+</div>
+<script src="assets/js/jquery-3.6.0.js"></script>
+<script src="assets/js/gamepad-client.js"></script>
+</body>
+</html>

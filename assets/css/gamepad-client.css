@@ -1,0 +1,39 @@
+body {
+    margin: 0 0 0 0;
+}
+
+.container {
+    display: flex;
+    align-items: flex-start;
+    height: 2000px;
+    background: rgba(114, 186, 94, 0.05);
+}
+
+.fullscreen {
+    width: 100%;
+    height: auto;
+}
+
+.sticky {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.btn-template {
+    border: solid black 1px;
+    position: absolute;
+    display: none;
+}
+
+.btn {
+    border: solid black 1px;
+    position: absolute;
+}
+
+.btn-active {
+    background-color: #0096f0;
+}
