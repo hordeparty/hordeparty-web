@@ -79,7 +79,7 @@ class GamepadHandler {
     }
 
     frame() {
-        if (this.controllers.size > 0 && this.controllerEnabledIdx) {
+        if (this.controllers.size > 0 && typeof this.controllerEnabledIdx !== 'undefined') {
             if (this.controllerEnabledIdx < 4) {
                 this.controllers.set(this.controllerEnabledIdx, navigator.getGamepads()[this.controllerEnabledIdx]);
             }
