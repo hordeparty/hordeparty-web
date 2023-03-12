@@ -1,4 +1,4 @@
-class KeyboardGamePad {
+class KeyboardGamepad {
 
     gamepad;
 
@@ -21,6 +21,17 @@ class KeyboardGamePad {
         "ArrowRight" // btn 15
     ];
 
+    axesKeys = {
+        KeyZ: new SimpleAxisToBtn(0, -1),
+        KeyC: new SimpleAxisToBtn(0, 1),
+        KeyS: new SimpleAxisToBtn(1, -1),
+        KeyX: new SimpleAxisToBtn(1, 1),
+        KeyB: new SimpleAxisToBtn(2, -1),
+        KeyM: new SimpleAxisToBtn(2, 1),
+        KeyH: new SimpleAxisToBtn(3, -1),
+        KeyN: new SimpleAxisToBtn(3, 1)
+    }
+
     pressBtn(eventCode, state) {
         let btnIdx = this.btnKeys.indexOf(eventCode);
         if (btnIdx > -1) {
@@ -28,13 +39,26 @@ class KeyboardGamePad {
         }
     }
 
+    moveAxis(eventCode, state) {
+        if (this.axesKeys[eventCode]) {
+            let axesKey = this.axesKeys[eventCode];
+            if (state) {
+                this.gamepad.axes[axesKey.axisIdx] = axesKey.trigValue;
+            } else {
+                this.gamepad.axes[axesKey.axisIdx] = 0;
+            }
+        }
+    }
+
     constructor(gamepad) {
         this.gamepad = gamepad
         document.addEventListener('keydown', (event) => {
             this.pressBtn(event.code, true);
+            this.moveAxis(event.code, true);
         });
         document.addEventListener('keyup', (event) => {
             this.pressBtn(event.code, false);
+            this.moveAxis(event.code, false);
         });
     }
 
