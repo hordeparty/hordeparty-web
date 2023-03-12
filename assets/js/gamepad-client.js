@@ -1,7 +1,20 @@
+let room = new URL(window.location.href).searchParams.get('room');
+let spclient = new SimplePeerClient("wss://hordeparty.ddns.net/clients", room)
+
 let gamePadHandler = new GamepadHandler();
 let screenGamepad = new FakeGamepad("Screen", "screen")
 gamePadHandler.addController(5, screenGamepad);
 gamePadHandler.controllerEnabledIdx = 5;
+
+gamePadHandler.sendWrtcData = function (wrtcData) {
+    if (spclient != null && spclient.simplePeer != null) {
+        try {
+            spclient.simplePeer.send(wrtcData);
+        } catch (e) {
+            //console.log('try again', e);
+        }
+    }
+};
 
 function handleStart(evt, el, idx) {
     evt.preventDefault();
@@ -65,7 +78,7 @@ function drawAxes(evt, el, idx) {
             ctx.beginPath();
             ctx.moveTo(73, 73);
             ctx.lineTo(x, y);
-            ctx.arc(x, y, 4, 0, 2 * Math.PI);
+            ctx.arc(x, y, 10, 0, 2 * Math.PI);
             ctx.stroke();
             setAxisFromTouch(x, y, idx);
         }
@@ -91,7 +104,7 @@ function resetDrawAxes(el, idx) {
     ctx.clearRect(0, 0, el.width, el.height);
     ctx.beginPath();
     ctx.strokeStyle = 'rgb(0,50,200)';
-    ctx.arc(73, 73, 4, 0, 2 * Math.PI);
+    ctx.arc(73, 73, 10, 0, 2 * Math.PI);
     ctx.stroke();
     setAxisFromTouch(73, 73, idx);
 }
@@ -140,6 +153,11 @@ function startup() {
     addBtn('8.5%', '16%', '43.5%', '69.5%'); // btn15
 
     handleAxes();
+
+    let btContainer = document.getElementById('btn-container');
+    btContainer.addEventListener("touchstart", (evt) => {
+        evt.preventDefault();
+    });
 
     let btns = document.getElementsByClassName('btn');
     for (let i = 0; i < btns.length; i++) {

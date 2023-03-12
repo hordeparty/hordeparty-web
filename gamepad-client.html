@@ -8,6 +8,24 @@
 <body>
 <div class="container">
     <div class="sticky" style="top: 0;" id="btn-container">
+        <table border="0" style="position: absolute;top: 0;right: 38%">
+            <tr>
+                <td align="right">Room</td>
+                <td><input type="text" value="" id="room"/></td>
+            </tr>
+            <tr>
+                <td align="right">Player</td>
+                <td><input type="text" value="Name:audio" id="playerName" onchange="spclient.changePlayerName();"/></td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <button id="connectBtn" onclick="spclient.connect();" disabled="disabled" style="width: 100%;">
+                        Waiting
+                        server...
+                    </button>
+                </td>
+            </tr>
+        </table>
         <img src="assets/img/standard_gamepad_play.svg" class="fullscreen"/>
         <canvas id="canvas-left-axes" width="147" height="147" class="axes"
                 style="border:solid black 1px; width: 15%; bottom: 7.5%; right: 58.5%;">
@@ -19,11 +37,16 @@
              style="width: 9.5%; height: 16%; bottom: 0.5%; right: 0.5%;"></div>
     </div>
 </div>
+<br/>
+<video width="640" height="480" id="receiver-video" playsinline autoplay style="display: none"></video>
 <script src="assets/js/jquery-3.6.0.js"></script>
+<script src="assets/js/socket.io.min.js"></script>
+<script src="assets/js/simplepeer.min.js"></script>
 <script src="assets/js/class/gamepad/FakeBtn.js"></script>
 <script src="assets/js/class/gamepad/FakeGamepad.js"></script>
 <script src="assets/js/class/gamepad/GamepadHandler.js"></script>
 <script src="assets/js/class/gamepad/GamepadMap.js"></script>
+<script src="assets/js/class/simplepeer/SimplePeerClient.js"></script>
 <script src="assets/js/gamepad-client.js"></script>
 </body>
 </html>
