@@ -29,16 +29,7 @@ function addBtn(width, height, bottom, right) {
 
 function handleAxesStart(evt, el, idx) {
     evt.preventDefault();
-    let x = evt.changedTouches[0].pageX - evt.changedTouches[0].target.offsetLeft;
-    let y = evt.changedTouches[0].pageY - evt.changedTouches[0].target.offsetTop;
-    const ctx = el.getContext("2d");
-    ctx.clearRect(0, 0, el.width, el.height);
-    ctx.beginPath();
-    ctx.moveTo(73, 73);
-    ctx.lineTo(x, y);
-    ctx.arc(x, y, 4, 0, 2 * Math.PI);
-    ctx.stroke();
-    console.log("touch start", idx, evt.changedTouches[0].pageX, evt.changedTouches[0].pageY, evt);
+    drawAxes(evt, el);
 }
 
 function handleAxesEnd(evt, el, idx) {
@@ -55,7 +46,19 @@ function handleAxesCancel(evt, el, idx) {
 
 function handleAxesMove(evt, el, idx) {
     evt.preventDefault();
-    console.log("touch move", idx);
+    drawAxes(evt, el);
+}
+
+function drawAxes(evt, el) {
+    let x = evt.changedTouches[0].pageX - evt.changedTouches[0].target.offsetLeft;
+    let y = evt.changedTouches[0].pageY - evt.changedTouches[0].target.offsetTop;
+    const ctx = el.getContext("2d");
+    ctx.clearRect(0, 0, el.width, el.height);
+    ctx.beginPath();
+    ctx.moveTo(73, 73);
+    ctx.lineTo(x, y);
+    ctx.arc(x, y, 4, 0, 2 * Math.PI);
+    ctx.stroke();
 }
 
 function resetDrawAxes(el) {
