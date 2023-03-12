@@ -1,13 +1,11 @@
 function handleStart(evt, el, idx) {
     evt.preventDefault();
     $(el).addClass('btn-active');
-    console.log("touch start", idx, evt.changedTouches[0].pageX, evt.changedTouches[0].pageY);
 }
 
 function handleEnd(evt, el, idx) {
     evt.preventDefault();
     $(el).removeClass('btn-active');
-    console.log("touch end", idx);
 }
 
 function handleCancel(evt, el, idx) {
@@ -35,7 +33,6 @@ function handleAxesStart(evt, el, idx) {
 function handleAxesEnd(evt, el, idx) {
     evt.preventDefault();
     resetDrawAxes(el);
-    console.log("touch end", idx);
 }
 
 function handleAxesCancel(evt, el, idx) {
@@ -61,8 +58,17 @@ function drawAxes(evt, el) {
             ctx.lineTo(x, y);
             ctx.arc(x, y, 4, 0, 2 * Math.PI);
             ctx.stroke();
+            setAxisFromTouch(x, y);
         }
     }
+}
+
+function setAxisFromTouch(x, y) {
+    let maxX = Math.min((x - 73), 73);
+    let posX = Math.max(maxX, -73) / 73;
+    let maxY = Math.min((y - 73), 73);
+    let posY = Math.max(maxY, -73) / 73;
+    console.log(posX, posY);
 }
 
 function resetDrawAxes(el) {
@@ -132,7 +138,6 @@ function startup() {
             handleCancel(evt, el, i);
         });
     }
-    console.log("Initialized.");
 }
 
 document.addEventListener("DOMContentLoaded", startup);
