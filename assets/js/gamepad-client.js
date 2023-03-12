@@ -29,18 +29,27 @@ function addBtn(width, height, bottom, right) {
 
 function handleAxesStart(evt, el, idx) {
     evt.preventDefault();
-    $(el).addClass('btn-active');
-    console.log("touch start", idx, evt.changedTouches[0].pageX, evt.changedTouches[0].pageY);
+    let x = evt.changedTouches[0].pageX - evt.changedTouches[0].target.offsetLeft;
+    let y = evt.changedTouches[0].pageY - evt.changedTouches[0].target.offsetTop;
+    const ctx = el.getContext("2d");
+    ctx.clearRect(0, 0, el.width, el.height);
+    ctx.beginPath();
+    ctx.moveTo(73, 73);
+    ctx.lineTo(x, y);
+    ctx.arc(x, y, 4, 0, 2 * Math.PI);
+    ctx.stroke();
+    console.log("touch start", idx, evt.changedTouches[0].pageX, evt.changedTouches[0].pageY, evt);
 }
 
 function handleAxesEnd(evt, el, idx) {
     evt.preventDefault();
-    $(el).removeClass('btn-active');
+    resetDrawAxes(el);
     console.log("touch end", idx);
 }
 
 function handleAxesCancel(evt, el, idx) {
     evt.preventDefault();
+    resetDrawAxes(el);
     console.log("touch cancel", idx);
 }
 
@@ -49,10 +58,20 @@ function handleAxesMove(evt, el, idx) {
     console.log("touch move", idx);
 }
 
+function resetDrawAxes(el) {
+    const ctx = el.getContext("2d");
+    ctx.clearRect(0, 0, el.width, el.height);
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgb(0,50,200)';
+    ctx.arc(73, 73, 4, 0, 2 * Math.PI);
+    ctx.stroke();
+}
+
 function handleAxes() {
     let axes = document.getElementsByClassName('axes');
     for (let i = 0; i < axes.length; i++) {
         let el = axes[i];
+        resetDrawAxes(el);
         el.addEventListener("touchstart", (evt) => {
             handleAxesStart(evt, el, i);
         });
