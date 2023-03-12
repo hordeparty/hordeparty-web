@@ -1,7 +1,7 @@
 function handleStart(evt, el, idx) {
     evt.preventDefault();
     $(el).addClass('btn-active');
-    console.log("touch start", idx);
+    console.log("touch start", idx, evt.changedTouches[0].pageX, evt.changedTouches[0].pageY);
 }
 
 function handleEnd(evt, el, idx) {
@@ -12,7 +12,7 @@ function handleEnd(evt, el, idx) {
 
 function handleCancel(evt, el, idx) {
     evt.preventDefault();
-    console.log("touc cancel", idx);
+    console.log("touch cancel", idx);
 }
 
 function addBtn(width, height, bottom, right) {
@@ -25,6 +25,48 @@ function addBtn(width, height, bottom, right) {
                 'width': width, 'height': height, 'bottom': bottom, 'right': right
             })
     );
+}
+
+function handleAxesStart(evt, el, idx) {
+    evt.preventDefault();
+    $(el).addClass('btn-active');
+    console.log("touch start", idx, evt.changedTouches[0].pageX, evt.changedTouches[0].pageY);
+}
+
+function handleAxesEnd(evt, el, idx) {
+    evt.preventDefault();
+    $(el).removeClass('btn-active');
+    console.log("touch end", idx);
+}
+
+function handleAxesCancel(evt, el, idx) {
+    evt.preventDefault();
+    console.log("touch cancel", idx);
+}
+
+function handleAxesMove(evt, el, idx) {
+    evt.preventDefault();
+    console.log("touch move", idx);
+}
+
+function handleAxes() {
+    let axes = document.getElementsByClassName('axes');
+    for (let i = 0; i < axes.length; i++) {
+        let el = axes[i];
+        el.addEventListener("touchstart", (evt) => {
+            handleAxesStart(evt, el, i);
+        });
+        el.addEventListener("touchend", (evt) => {
+            handleAxesEnd(evt, el, i);
+        });
+        el.addEventListener("touchcancel", (evt) => {
+            handleAxesCancel(evt, el, i);
+        });
+        el.addEventListener("touchmove", (evt) => {
+            handleAxesMove(evt, el, i);
+        });
+    }
+
 }
 
 function startup() {
@@ -49,6 +91,8 @@ function startup() {
     addBtn('8.5%', '16%', '43.5%', '87.5%'); // btn14
     addBtn('8.5%', '16%', '43.5%', '69.5%'); // btn15
 
+    handleAxes();
+
     let btns = document.getElementsByClassName('btn');
     for (let i = 0; i < btns.length; i++) {
         let el = btns[i];
@@ -59,7 +103,7 @@ function startup() {
             handleEnd(evt, el, i);
         });
         el.addEventListener("touchcancel", (evt) => {
-            handleEnd(evt, el, i);
+            handleCancel(evt, el, i);
         });
     }
     console.log("Initialized.");
