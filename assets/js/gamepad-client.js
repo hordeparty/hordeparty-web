@@ -1,15 +1,24 @@
+let gamePadHandler = new GamepadHandler();
+let screenGamepad = new FakeGamepad("Screen", "screen")
+gamePadHandler.addController(5, screenGamepad);
+gamePadHandler.controllerEnabledIdx = 5;
+
 function handleStart(evt, el, idx) {
     evt.preventDefault();
+    screenGamepad.buttons[idx].pressed = true;
+    screenGamepad.buttons[idx].touched = true;
     $(el).addClass('btn-active');
 }
 
 function handleEnd(evt, el, idx) {
     evt.preventDefault();
+    screenGamepad.buttons[idx].pressed = false;
+    screenGamepad.buttons[idx].touched = false;
     $(el).removeClass('btn-active');
 }
 
 function handleCancel(evt, el, idx) {
-    evt.preventDefault();
+    handleEnd(evt, el, idx);
     console.log("touch cancel", idx);
 }
 
@@ -27,26 +36,26 @@ function addBtn(width, height, bottom, right) {
 
 function handleAxesStart(evt, el, idx) {
     evt.preventDefault();
-    drawAxes(evt, el);
+    drawAxes(evt, el, idx);
 }
 
 function handleAxesEnd(evt, el, idx) {
     evt.preventDefault();
-    resetDrawAxes(el);
+    resetDrawAxes(el, idx);
 }
 
 function handleAxesCancel(evt, el, idx) {
     evt.preventDefault();
-    resetDrawAxes(el);
+    resetDrawAxes(el, idx);
     console.log("touch cancel", idx);
 }
 
 function handleAxesMove(evt, el, idx) {
     evt.preventDefault();
-    drawAxes(evt, el);
+    drawAxes(evt, el, idx);
 }
 
-function drawAxes(evt, el) {
+function drawAxes(evt, el, idx) {
     for (let i = 0; i < evt.changedTouches.length; i++) {
         if (evt.changedTouches[i].target === el) {
             let x = evt.changedTouches[i].pageX - evt.changedTouches[i].target.offsetLeft;
@@ -58,33 +67,40 @@ function drawAxes(evt, el) {
             ctx.lineTo(x, y);
             ctx.arc(x, y, 4, 0, 2 * Math.PI);
             ctx.stroke();
-            setAxisFromTouch(x, y);
+            setAxisFromTouch(x, y, idx);
         }
     }
 }
 
-function setAxisFromTouch(x, y) {
+function setAxisFromTouch(x, y, idx) {
     let maxX = Math.min((x - 73), 73);
     let posX = Math.max(maxX, -73) / 73;
     let maxY = Math.min((y - 73), 73);
     let posY = Math.max(maxY, -73) / 73;
-    console.log(posX, posY);
+    if (idx === 0) {
+        screenGamepad.axes[0] = posX;
+        screenGamepad.axes[1] = posY;
+    } else if (idx === 1) {
+        screenGamepad.axes[2] = posX;
+        screenGamepad.axes[3] = posY;
+    }
 }
 
-function resetDrawAxes(el) {
+function resetDrawAxes(el, idx) {
     const ctx = el.getContext("2d");
     ctx.clearRect(0, 0, el.width, el.height);
     ctx.beginPath();
     ctx.strokeStyle = 'rgb(0,50,200)';
     ctx.arc(73, 73, 4, 0, 2 * Math.PI);
     ctx.stroke();
+    setAxisFromTouch(73, 73, idx);
 }
 
 function handleAxes() {
     let axes = document.getElementsByClassName('axes');
     for (let i = 0; i < axes.length; i++) {
         let el = axes[i];
-        resetDrawAxes(el);
+        resetDrawAxes(el, i);
         el.addEventListener("touchstart", (evt) => {
             handleAxesStart(evt, el, i);
         });
