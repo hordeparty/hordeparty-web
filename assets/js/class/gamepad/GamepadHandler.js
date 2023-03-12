@@ -13,9 +13,15 @@ class GamepadHandler {
     }
 
     constructor() {
-        window.addEventListener('gamepadconnected', this.connectListener.bind(this));
-        window.addEventListener('gamepaddisconnected', this.disconnectListener.bind(this));
-        window.requestAnimationFrame(this.frame.bind(this));
+        window.addEventListener('gamepadconnected', (e) => {
+            this.connectListener(e);
+        });
+        window.addEventListener('gamepaddisconnected', (e) => {
+            this.disconnectListener(e);
+        });
+        window.requestAnimationFrame(() => {
+            this.frame();
+        });
     }
 
     connectListener(e) {
@@ -83,7 +89,9 @@ class GamepadHandler {
                 this.gamepadMap.get(this.controllerEnabledIdx)
             );
         }
-        window.requestAnimationFrame(this.frame.bind(this));
+        window.requestAnimationFrame(() => {
+            this.frame()
+        });
     }
 
 }
